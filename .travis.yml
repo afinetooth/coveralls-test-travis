@@ -1,0 +1,23 @@
+language: ruby
+rvm:
+- 2.6.3
+before_script:
+- bundle exec rake db:create --all
+- bundle exec rake db:migrate
+script:
+- bundle exec rake ci:tests
+services:
+- postgresql
+notifications:
+  email: false
+deploy:
+  provider: heroku
+  api_key:
+    secure: AgD5uycmVerLkcXHn+pJUpRO/chpzKSCBqjR1VHjs6Hi6rgk0GNy5Cbxxpr8pfqY6WkI/Kq/2J8i5VNv7LvgTiqS8E5/xPM5IVMFlsxGDqqiL9zDSv39v8SCZ60fNa8Yy94NKcXBCGONpC1LGM0ZnoG477vPuXijSwqWPIcntP9IvZYRWPFiwuow/ss+oeLqjxaactB7nalyuANj0GTsjZBX7YHdgAlTukikSiRd2CcHzen8V+uWdkUvLdYA6H0cxfRb+QTdOBo85ARMIRCb7hM0LaCqUcWopkNSuQGm+arwOIAmBt9y9rJE0BWI8f5Y91KwRhrO1BqYE20j7uGzZ8P+4O09xS1WZYrv16Lph3CluxkkpnuPT/OPFGeLSUEetmvyBkjC9aA753sgGqDA5GkzU+9Uf9hTCfQDk6q+mnAHgXyJoEQ8779X4KT1rsBuYBppkY4wrt28nB8DYrOQ3gfJ1ESWRRNO+E5a9+oy7M2VmO4I0qwzNknTexNxbEjw15VnkWbztqUaa7zKB7EX5zTOelbbL5E6XDofZ0L4ENSHpxxRNwGB8+6WqnbHKWtAc3ipccMUWiAVmOczIQHHXzZrIWKGyYv7Fo5ruyE7q8QmyPecO50GBDpxEcSFpyXpNq99h+5CWk5FHS9MN1Vh7/OPSTlw/a5zSMC8w0rK+Ow=
+  app:
+    develop: coveralls-test-travis-staging
+    master: coveralls-test-travis
+  on:
+    repo: afinetooth/coveralls-test-travis
+  run:
+    - "rails db:migrate"
